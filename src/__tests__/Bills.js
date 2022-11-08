@@ -12,6 +12,8 @@ import {localStorageMock} from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store"
 import router from "../app/Router"
 import Bills from "../containers/Bills.js";
+import Actions from './Actions.js'
+import {billUrl} from './Actions.js'
 
 //import router from "../app/Router.js";
 
@@ -106,7 +108,7 @@ describe("Given I am connected as an employee", () => {
       //const handleClickIconEye2 = jest.fn(() => bills.handleClickIconEye())
       //iconEye1a.addEventListener('click', handleClickIconEye2)
       console.log("before", iconEye1a.onclick)
-      console.log("events", getEventListeners(iconEye1a))
+      //console.log("events", getEventListeners(iconEye1a))
       iconEye1a.onclick = function(){}
       console.log("after", iconEye1a.onclick)
       userEvent.click(iconEye1a)
