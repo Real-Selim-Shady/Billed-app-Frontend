@@ -12,8 +12,6 @@ import {localStorageMock} from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store"
 import router from "../app/Router"
 import Bills from "../containers/Bills.js";
-import Actions from './Actions.js'
-import {billUrl} from './Actions.js'
 
 //import router from "../app/Router.js";
 
@@ -24,9 +22,9 @@ import app from '../../app'
 import * as itemQueries from '../../db/queries/item.query'*/
 
 describe("Given I am connected as an employee", () => {
-  beforeEach(()=>
+  /*beforeEach(()=>
   bills.handleClickIconEye = jest.fn()
-  )
+  )*/
   describe("When I am on Bills Page", () => {
     test("Then bill icon in vertical layout should be highlighted", async () => {
 
@@ -57,7 +55,7 @@ describe("Given I am connected as an employee", () => {
 
       jest.spyOn(mockStore, "bills")
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      window.localStorage.setItem('user', JSON.stringify({
+      window.localStorage.setItem('userTest', JSON.stringify({
         type: 'Employee',
         email: "employee@test.tld",
         password: "Employee",
@@ -82,39 +80,14 @@ describe("Given I am connected as an employee", () => {
         localStorage,
         PREVIOUS_LOCATION,
       });
-      //document.body.innerHTML = BillsUI({ data: bills })
-
-
-      //const iconEye = document.querySelectorAll(`div[data-testid="icon-eye"]`)
-
-
 
       const iconEye = [screen.getAllByTestId('icon-eye')];
       const iconEye1 = iconEye[0]
       const iconEye1a = iconEye1[0] 
-      console.log(iconEye)
-      console.log(iconEye.length)
-      console.log(iconEye1)
-      console.log(iconEye1.length)
-      console.log(iconEye1a)
-      //console.log(bills.handleClickIconEye)
-      //bills.handleClickIconEye = jest.fn()
-
-      const handleClickIconEye2 = jest.fn()
-
-      //bills.handleClickIconEye= (iconEye1a) => {}
-      //bills.handleClickIconEye = function(){};
-      //jest.spyOn(bills, "handleClickIconEye")
-      //const handleClickIconEye2 = jest.fn(() => bills.handleClickIconEye())
-      //iconEye1a.addEventListener('click', handleClickIconEye2)
-      console.log("before", iconEye1a.onclick)
-      //console.log("events", getEventListeners(iconEye1a))
-      iconEye1a.onclick = function(){}
-      console.log("after", iconEye1a.onclick)
-      userEvent.click(iconEye1a)
-
-      //userEvent.click(iconEye1a)
       
+      iconEye1a.onclick = function(){}
+
+      userEvent.click(iconEye1a)
       //expect(handleClickIconEye2).toHaveBeenCalled()
 
 

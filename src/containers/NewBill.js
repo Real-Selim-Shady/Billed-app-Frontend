@@ -52,24 +52,18 @@ export default class NewBill {
       this.ifForTest(e);
       return;
     }
-    //console.log(file2.value) -> donne le bon nom du champ ="nom de fichier"
 
     const formData = new FormData();
     const email = JSON.parse(localStorage.getItem("user")).email;
     formData.append('file', file);
     formData.append('email', email);
 
-    console.log(formData)
-
-    //console.log("handleFileChange-this.store", this.store.bills)
-    //this.store.bills()
-    //return
-
-    console.log(this.store)
+    //console.log(formData)
+    //console.log(this.store)
 
     this.store
       .bills()
-      console.log(this.bills)
+      console.log(this.store.bills)
       .create({
         data: formData,
         headers: {
@@ -89,9 +83,7 @@ export default class NewBill {
   ifForTest = (e) => {
     console.log("la valeur du champs est réinitialisée")
     //alert("Le justificatif n'est pas une image jpg, jpeg ou png! Il ne sera donc pas accepté. Veuillez charger un justificatif au format jpg, jpeg ou png.");
-    // e.target.value = "";
     e.target.value = ""
-    //console.log(file2.value) -> donne le bon nom du champs = ""
   }
 
   

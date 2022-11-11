@@ -144,10 +144,6 @@ describe("Given I am connected as an employee", () => {
         PREVIOUS_LOCATION,
       });
 
-      /*window.FormData = function() {
-        this.append = function (p, v) {
-        }
-      }*/ //-> FormData n'est pas appelé
 
       const file = screen.getByTestId("file");
       newBill.ifForTest = (e)=>{}
@@ -168,15 +164,111 @@ describe("Given I am connected as an employee", () => {
 
       document.body.innerHTML = NewBillUI();
       let PREVIOUS_LOCATION = "";
-      const store = jest.fn()
+      //const store = //(mockStore)=>{}//jest.fn()
+      const mockStore = jest.fn()
+
       const localStorage = window.localStorage
       const newBill = new NewBill({
         document,
         onNavigate,
-        store,
+        mockStore,
         localStorage,
         PREVIOUS_LOCATION,
       });
+      //newBill.bills = jest.fn()
+
+      const file = screen.getByTestId("file");
+      newBill.ifForTest = (e)=>{}
+      jest.spyOn(newBill, "ifForTest")
+      
+      const handleChangeFile = jest.fn(newBill.handleChangeFile)
+
+      const bills = jest.fn()
+
+
+      file.addEventListener("change", handleChangeFile)
+      fireEvent.change(file, {
+        target: {
+          files: [new File(['(⌐□_□)'], '\\images\\chucknorris.jpg', {type: 'image/jpg'})],
+        },
+      })
+
+      expect(newBill.ifForTest).toHaveBeenCalledTimes(0);
+
+    })
+    /*test( "", async() => {
+
+      document.body.innerHTML = NewBillUI();
+      let PREVIOUS_LOCATION = "";
+      //const store = //(mockStore)=>{}//jest.fn()
+      const mockStore = jest.fn()
+
+      const localStorage = window.localStorage
+      const newBill = new NewBill({
+        document,
+        onNavigate,
+        mockStore,
+        localStorage,
+        PREVIOUS_LOCATION,
+      });
+      //newBill.bills = jest.fn()
+
+
+
+      const inputData = {
+        expense: "Transports",
+        name: "vol azerty",
+        date: "2004-04-04",
+        amount: "150",
+        vat: "70",
+        pct: "30",
+        commentary: "clavier pas écolo",
+        fileupload : "blabla.jpg"
+      };
+
+      const expenseType = screen.getByTestId('expense-type');
+      fireEvent.change(expenseType, { target: { value: inputData.expense },});
+      expect(expenseType.value).toBe(inputData.expense);
+
+      const expenseName = screen.getByTestId('expense-name');
+      fireEvent.change(expenseName, { target: { value: inputData.name },});
+      expect(expenseName.value).toBe(inputData.name);
+
+
+      const datePicker = screen.getByTestId('datepicker');
+      fireEvent.change(datePicker, { target: { value: inputData.date },});
+      expect(datePicker.value).toBe(inputData.date);
+
+      const amount = screen.getByTestId('amount');
+      fireEvent.change(amount, { target: { value: inputData.amount.toString() },});
+      expect(amount.value).toBe(inputData.amount.toString());
+
+      const vat = screen.getByTestId('vat');
+      fireEvent.change(vat, { target: { value: inputData.vat },});
+      expect(vat.value).toBe(inputData.vat);
+
+      const pct = screen.getByTestId('pct');
+      fireEvent.change(pct, { target: { value: inputData.pct.toString() },});
+      expect(pct.value).toBe(inputData.pct.toString());
+
+      const commentary = screen.getByTestId('commentary');
+      fireEvent.change(commentary, { target: { value: inputData.commentary },});
+      expect(commentary.value).toBe(inputData.commentary);
+
+      const form = screen.getByTestId("form-new-bill");
+
+      newBill.updateBill = (bill)=>{}
+
+      newBill.fileUrl = "http://www.lala.com";
+      newBill.fileName = "vol azerty.jpg";
+      newBill.status ="pending";
+
+
+      jest.spyOn(newBill, "updateBill")
+      
+      const handleSubmit = jest.fn(newBill.handleSubmit);
+      form.addEventListener("submit", handleSubmit);
+      fireEvent.submit(form);
 
       const file = screen.getByTestId("file");
       newBill.ifForTest = (e)=>{}
@@ -195,7 +287,7 @@ describe("Given I am connected as an employee", () => {
 
       expect(newBill.ifForTest).toHaveBeenCalledTimes(0);
 
-    })
+    })*/
   })
 })
 

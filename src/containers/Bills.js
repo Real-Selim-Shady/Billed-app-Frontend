@@ -23,10 +23,19 @@ export default class {
   }
 
   handleClickIconEye = (icon) => {
-    console.log("ouais il passe ici")
+    //console.log("ouais il passe ici")
     const billUrl = icon.getAttribute("data-bill-url")
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
+    //$('#modaleFile').modal('show')
+    //const user = JSON.parse(window.localStorage.getItem("user"))
+    //const email = JSON.parse(localStorage.getItem("user")).email;
+    //console.log(email)
+    //console.log(email.value)
+    this.modalTest();
+  }
+
+  modalTest = (icon) => {
     $('#modaleFile').modal('show')
   }
 
