@@ -1,3 +1,4 @@
+
 const mockedBills = {
   list() {
     return Promise.resolve([{
@@ -84,10 +85,12 @@ const mockedBills = {
   },
 }
 
+
+
 export default {
   bills() {
+
     return mockedBills
-    //return {}
   
   }
 }

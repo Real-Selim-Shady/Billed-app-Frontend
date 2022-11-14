@@ -7,14 +7,10 @@ export default class NewBill {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
-    //console.log("store", this.store)
     const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
     file.addEventListener("change", this.handleChangeFile)
-    /*function handleChangeFile(){
-      return exports.ifForTest();
-    }*/
     this.fileUrl = null
     this.fileName = null
     this.billId = null
@@ -25,14 +21,8 @@ export default class NewBill {
     //console.log("handleChangeFile-vrai")
     e.preventDefault();
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0];
-    //const file2 = this.document.querySelector(`input[data-testid="file"]`);
-    //const filePath = e.target.value.split(/\\/g);
-    // const filePath = e.target.value.split(/\\/g);
     const filePath = e.target.files[0].name.split(/\\/g);
-    //console.log(filePath);
     const fileName = filePath[filePath.length-1];
-    //console.log(fileName);
-    //console.log(this.document.querySelector(`input[data-testid="file"]`).value)
     const fileType = fileName.split('.').pop();
 
 
@@ -58,12 +48,8 @@ export default class NewBill {
     formData.append('file', file);
     formData.append('email', email);
 
-    //console.log(formData)
-    //console.log(this.store)
-
     this.store
       .bills()
-      console.log(this.store.bills)
       .create({
         data: formData,
         headers: {
@@ -71,7 +57,6 @@ export default class NewBill {
         }
       })
       .then(({fileUrl, key}) => {
-        //console.log(fileUrl)
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
@@ -89,14 +74,8 @@ export default class NewBill {
   
   handleSubmit = e => {
     e.preventDefault()
-    //console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const user = JSON.parse(window.localStorage.getItem("user"))
-    //console.log("user", user)
     const email = user.email
-
-    //console.log("localStorage", window.localStorage.getItem("user"))
-    //console.log("JSON.parse", JSON.parse(window.localStorage.getItem("user")))
-    //console.log("email", email)
     const bill = {
       email: email,
       type: e.target.querySelector(`select[data-testid="expense-type"]`).value,
