@@ -12,6 +12,7 @@ import {localStorageMock} from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store"
 import router from "../app/Router"
 import Bills from "../containers/Bills.js";
+import NewBill from "../containers/NewBill.js";
 
 //import router from "../app/Router.js";
 
@@ -26,6 +27,43 @@ describe("Given I am connected as an employee", () => {
   bills.handleClickIconEye = jest.fn()
   )*/
   describe("When I am on Bills Page", () => {
+
+    test("Call imgUrlAndWidth", () => {
+
+      jest.spyOn(mockStore, "bills")
+
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
+
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+
+      //const store = jest.fn();
+
+      const bills = new Bills({
+        document,
+        onNavigate,
+        store:null,
+        localStorage: window.localStorage,
+      });
+
+      const iconEye = [screen.getAllByTestId('icon-eye')];
+      const iconEye1 = iconEye[0]
+      const iconEye1a = iconEye1[0] 
+      
+      //iconEye1a.onclick = function(){}
+
+      //userEvent.click(iconEye1a)
+
+      //bills.imgUrlAndWidth(/*{billUrl:"blabla.jpg", imgWidth:"50*100"}*/);
+
+      //expect(bills.billUrl).toBeCalledWith("blabla.jpg")
+
+    })
+
     test("Then bill icon in vertical layout should be highlighted", async () => {
 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
@@ -39,9 +77,22 @@ describe("Given I am connected as an employee", () => {
       window.onNavigate(ROUTES_PATH.Bills)
       await waitFor(() => screen.getByTestId('icon-window'))
       const windowIcon = screen.getByTestId('icon-window')
-      //to-do write expect expression
-      //expect(windowIcon).toEqual("active-icon")
       expect(windowIcon.classList.contains("active-icon")).toEqual(true)
+    })
+    test("Then mail icon in vertical layout should not be highlighted", async () => {
+
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      const root = document.createElement("div")
+      root.setAttribute("id", "root")
+      document.body.append(root)
+      router()
+      window.onNavigate(ROUTES_PATH.Bills)
+      await waitFor(() => screen.getByTestId('icon-mail'))
+      const mailIcon = screen.getByTestId('icon-mail')
+      expect(mailIcon.classList.contains("active-icon")).toEqual(false)
     })
     test("Then bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
@@ -51,39 +102,22 @@ describe("Given I am connected as an employee", () => {
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
     })
-    test("Then, employee can click on icon eye and show the picture justifying the bill", async () => {
+
+    /*test("Then, employee can click on icon eye and show the picture justifying the bill", async () => {
 
       jest.spyOn(mockStore, "bills")
-      /*Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      window.localStorage.setItem('userTest', JSON.stringify({
-        type: 'Employee',
-        email: "employee@test.tld",
-        password: "Employee",
-        status: "connected"
-      }))
-      const root = document.createElement("div")
-      root.setAttribute("id", "root")
-      document.body.append(root)
-      router()*/ //commenter tout ça ne change rien
-      //window.onNavigate(ROUTES_PATH.Bills) commenter la ligne ne change rien
-
-
-      //let PREVIOUS_LOCATION = "";
 
       const onNavigate = (pathname) => {
         document.body.innerHTML = ROUTES({ pathname });
       };
 
       const store = jest.fn();
-      //const localStorage = window.localStorage
 
       const bills = new Bills({
         document,
         onNavigate,
-        //store:null,
         store,
         localStorage: window.localStorage,
-        //PREVIOUS_LOCATION,
       });
 
       const iconEye = [screen.getAllByTestId('icon-eye')];
@@ -93,10 +127,9 @@ describe("Given I am connected as an employee", () => {
       iconEye1a.onclick = function(){}
 
       userEvent.click(iconEye1a)
-      //expect(handleClickIconEye2).toHaveBeenCalled()
 
 
-    })
+    })*/
   })
 })
 

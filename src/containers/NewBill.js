@@ -26,23 +26,22 @@ export default class NewBill {
     const fileName = filePath[filePath.length-1];
     const fileType = fileName.split('.').pop();
 
+    //console.log("fileName", fileName)
+    //console.log("fileType",fileType)
+    if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
 
-    /*if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
-      //console.log("la valeur du champs est réinitialisée")
       this.consoleLog = console.log("la valeur du champs est réinitialisée");
-      //alert("Le justificatif n'est pas une image jpg, jpeg ou png! Il ne sera donc pas accepté. Veuillez charger un justificatif au format jpg, jpeg ou png.");
-      // e.target.value = "";
-      this.document.querySelector(`input[data-testid="file"]`).value = ""
+      this.clearInputFile();
 
       return;
 
-    }*/
+    }
         
 
-    if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
+    /*if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
       this.ifForTest(e);
       return;
-    }
+    }*/
 
     const formData = new FormData();
     const email = JSON.parse(localStorage.getItem("user")).email;
@@ -57,20 +56,28 @@ export default class NewBill {
           noContentType: true
         }
       })
-      .then(({fileUrl, key}) => {
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-        this.fileType = fileType
+      .then(({fileUrl, key}) => { 
+        this.setBillFile({fileUrl, key, fileName, fileType});
       }).catch(error => console.error(error));
   }
 
-  /* istanbuuul ignore next */
-  ifForTest = (e) => {
-    console.log("la valeur du champs est réinitialisée")
-    //alert("Le justificatif n'est pas une image jpg, jpeg ou png! Il ne sera donc pas accepté. Veuillez charger un justificatif au format jpg, jpeg ou png.");
-    e.target.value = ""
+  setBillFile = ({fileUrl, key, fileName, fileType}) => {
+    this.billId = key
+    this.fileUrl = fileUrl
+    this.fileName = fileName
+    this.fileType = fileType
   }
+
+  clearInputFile = () => {
+    this.document.querySelector(`input[data-testid="file"]`).value = ""
+  }
+
+
+
+  /*ifForTest = (e) => {
+    console.log("la valeur du champs est réinitialisée")
+    e.target.value = ""
+  }*/
 
   
   handleSubmit = e => {
