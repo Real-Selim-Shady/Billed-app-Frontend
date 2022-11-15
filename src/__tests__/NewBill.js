@@ -165,8 +165,12 @@ describe("Given I am connected as an employee", () => {
 
 
 
-      let PREVIOUS_LOCATION = "";
+      //let PREVIOUS_LOCATION = "";
       //const store = //(mockStore)=>{}//jest.fn()
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
+      
       const store = jest.fn()
 
       //const localStorage = window.localStorage
@@ -176,7 +180,7 @@ describe("Given I am connected as an employee", () => {
         store,//: null /*ajout de null comme sur Dashboard*/,
         //bills:bills //ajout de la ligne,
         localStorage: window.localStorage,
-        PREVIOUS_LOCATION,
+        //PREVIOUS_LOCATION,
       });
       document.body.innerHTML = NewBillUI(/*{ data : bills }*/);
 

@@ -54,7 +54,7 @@ describe("Given I am connected as an employee", () => {
     test("Then, employee can click on icon eye and show the picture justifying the bill", async () => {
 
       jest.spyOn(mockStore, "bills")
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      /*Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('userTest', JSON.stringify({
         type: 'Employee',
         email: "employee@test.tld",
@@ -64,21 +64,26 @@ describe("Given I am connected as an employee", () => {
       const root = document.createElement("div")
       root.setAttribute("id", "root")
       document.body.append(root)
-      router()
-      window.onNavigate(ROUTES_PATH.Bills)
+      router()*/ //commenter tout ça ne change rien
+      //window.onNavigate(ROUTES_PATH.Bills) commenter la ligne ne change rien
 
 
-      let PREVIOUS_LOCATION = "";
+      //let PREVIOUS_LOCATION = "";
+
+      const onNavigate = (pathname) => {
+        document.body.innerHTML = ROUTES({ pathname });
+      };
 
       const store = jest.fn();
-      const localStorage = window.localStorage
+      //const localStorage = window.localStorage
 
       const bills = new Bills({
         document,
         onNavigate,
+        //store:null,
         store,
-        localStorage,
-        PREVIOUS_LOCATION,
+        localStorage: window.localStorage,
+        //PREVIOUS_LOCATION,
       });
 
       const iconEye = [screen.getAllByTestId('icon-eye')];
