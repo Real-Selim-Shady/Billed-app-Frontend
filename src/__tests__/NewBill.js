@@ -9,6 +9,7 @@ import { ROUTES } from "../constants/routes";
 import { ROUTES_PATH } from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store"
+import { bills } from "../fixtures/bills"
 
 import router from "../app/Router.js";
 import userEvent from "@testing-library/user-event";
@@ -162,20 +163,28 @@ describe("Given I am connected as an employee", () => {
     })
     test( "then employee upload file with supported format", async() => {
 
-      document.body.innerHTML = NewBillUI();
+
 
       let PREVIOUS_LOCATION = "";
       //const store = //(mockStore)=>{}//jest.fn()
       const store = jest.fn()
 
-      const localStorage = window.localStorage
+      //const localStorage = window.localStorage
       const newBill = new NewBill({
         document,
         onNavigate,
-        store,
-        localStorage,
+        store,//: null /*ajout de null comme sur Dashboard*/,
+        //bills:bills //ajout de la ligne,
+        localStorage: window.localStorage,
         PREVIOUS_LOCATION,
       });
+      document.body.innerHTML = NewBillUI(/*{ data : bills }*/);
+
+      /*const dashboard = new Dashboard({
+        document, onNavigate, store: null, bills:bills, localStorage: window.localStorage
+      })
+      document.body.innerHTML = DashboardUI({ data: { bills } })*/
+
 
 
 

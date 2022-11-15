@@ -1,9 +1,10 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
+import NewBillUI from "../views/NewBillUI.js" //ajout
 
 
 export default class NewBill {
-  constructor({ document, onNavigate, store, localStorage }) {
+  constructor({ document, onNavigate, store, bills/*ajout*/, localStorage }) {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
