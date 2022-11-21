@@ -145,8 +145,6 @@ describe("Given I am connected as an employee", () => {
 
 
       const file = screen.getByTestId("file");
-      //newBill.ifForTest = (e)=>{}
-      //jest.spyOn(newBill, "ifForTest")
       
       const handleChangeFile = jest.fn(newBill.handleChangeFile)
       file.addEventListener("change", handleChangeFile)
@@ -158,12 +156,12 @@ describe("Given I am connected as an employee", () => {
       jest.spyOn(newBill, "clearInputFile")
       const upload = new File(["nom.pdf"],"nom.pdf")
       userEvent.upload(file, upload)
-      console.log("file.value", file.value)
+      //console.log("file.value", file.value)
 
       expect(newBill.clearInputFile).toHaveBeenCalled();
 
     })
-    test ("call function setBillFile", ()=>{
+    test ("Then, website set the Bill Id", ()=>{
 
       document.body.innerHTML = NewBillUI();
       const store = jest.fn()
@@ -181,50 +179,6 @@ describe("Given I am connected as an employee", () => {
       expect(newBill.billId).toBe("123")
 
     })
-    /*test( "then employee upload file with supported format", async() => {
-      
-      const store = jest.fn()
-      
-      //console.log('body before', document.body.innerHTML)
-      const inputFile = screen.getByTestId("file");
-      fireEvent.change(inputFile, {
-        target: {
-          files: [new File(['(⌐□_□)'], '\\images\\chucknorris.jpg', {type: 'image/jpg'})],
-        },
-      })
-      //console.log("",)
-
-      const newBill = new NewBill({
-        document,
-        onNavigate,
-        store,
-        localStorage: window.localStorage,
-      });
-      //console.log('body after', document.body.innerHTML)
-      //document.body.innerHTML = NewBillUI(/*{ data : bills }*//*);
-
-
-      const file = screen.getAllByTestId("file");
-      const handleChangeFile = jest.fn(newBill.handleChangeFile)
-
-      newBill.ifForTest = (e)=>{}
-      jest.spyOn(newBill, "ifForTest")
-      
-      const bills = jest.fn()
-
-
-      file.addEventListener("change", handleChangeFile)
-
-      console.log("mockStore",mockStore);
-      fireEvent.change(file, {
-        target: {
-          files: [new File(['(⌐□_□)'], '\\images\\chucknorris.jpg', {type: 'image/jpg'})],
-        },
-      })
-
-      expect(newBill.ifForTest).toHaveBeenCalledTimes(0);
-
-    })*/
   })
 })
 

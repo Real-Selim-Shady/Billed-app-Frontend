@@ -19,18 +19,22 @@ export default class NewBill {
   }
 
   handleChangeFile = e => {
-    //console.log("handleChangeFile-vrai")
+
     e.preventDefault();
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0];
     const filePath = e.target.files[0].name.split(/\\/g);
     const fileName = filePath[filePath.length-1];
     const fileType = fileName.split('.').pop();
 
-    //console.log("fileName", fileName)
-    //console.log("fileType",fileType)
+    const formData = new FormData();
+    const email = JSON.parse(localStorage.getItem("user")).email;
+    formData.append('file', file);
+    formData.append('email', email);
+
     if (fileType !== "jpg" && fileType !== "jpeg" && fileType !== "png") {
 
-      this.consoleLog = console.log("la valeur du champs est réinitialisée");
+      //this.consoleLog = console.log("la valeur du champs est réinitialisée");
+      console.log(file)
       this.clearInputFile();
 
       return;
@@ -43,10 +47,7 @@ export default class NewBill {
       return;
     }*/
 
-    const formData = new FormData();
-    const email = JSON.parse(localStorage.getItem("user")).email;
-    formData.append('file', file);
-    formData.append('email', email);
+
 
     this.store
       .bills()
@@ -73,12 +74,6 @@ export default class NewBill {
   }
 
 
-
-  /*ifForTest = (e) => {
-    console.log("la valeur du champs est réinitialisée")
-    e.target.value = ""
-  }*/
-
   
   handleSubmit = e => {
     e.preventDefault()
@@ -103,7 +98,6 @@ export default class NewBill {
   }
 
   // not need to cover this function by tests
-  /* istanbul ignore next */
   updateBill = (bill) => {
     if (this.store) {
       this.store

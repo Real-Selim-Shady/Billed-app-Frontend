@@ -14,56 +14,18 @@ import router from "../app/Router"
 import Bills from "../containers/Bills.js";
 import NewBill from "../containers/NewBill.js";
 
-//import router from "../app/Router.js";
+
 
 jest.mock("../app/store", () => mockStore)
-/*import request from 'supertest'
-import sinon from 'sinon'
-import app from '../../app'
-import * as itemQueries from '../../db/queries/item.query'*/
+/*bills.imgUrlAndWidth = jest.fn()
+bills.modalFileShow = jest.fn()*/
+
 
 describe("Given I am connected as an employee", () => {
   /*beforeEach(()=>
   bills.handleClickIconEye = jest.fn()
   )*/
   describe("When I am on Bills Page", () => {
-
-    test("Call imgUrlAndWidth", () => {
-
-      jest.spyOn(mockStore, "bills")
-
-      const onNavigate = (pathname) => {
-        document.body.innerHTML = ROUTES({ pathname });
-      };
-
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      window.localStorage.setItem('user', JSON.stringify({
-        type: 'Employee'
-      }))
-
-      //const store = jest.fn();
-
-      const bills = new Bills({
-        document,
-        onNavigate,
-        store:null,
-        localStorage: window.localStorage,
-      });
-
-      const iconEye = [screen.getAllByTestId('icon-eye')];
-      const iconEye1 = iconEye[0]
-      const iconEye1a = iconEye1[0] 
-      
-      //iconEye1a.onclick = function(){}
-
-      //userEvent.click(iconEye1a)
-
-      //bills.imgUrlAndWidth(/*{billUrl:"blabla.jpg", imgWidth:"50*100"}*/);
-
-      //expect(bills.billUrl).toBeCalledWith("blabla.jpg")
-
-    })
-
     test("Then bill icon in vertical layout should be highlighted", async () => {
 
       Object.defineProperty(window, 'localStorage', { value: localStorageMock })
@@ -79,21 +41,28 @@ describe("Given I am connected as an employee", () => {
       const windowIcon = screen.getByTestId('icon-window')
       expect(windowIcon.classList.contains("active-icon")).toEqual(true)
     })
-    test("Then mail icon in vertical layout should not be highlighted", async () => {
 
-      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      window.localStorage.setItem('user', JSON.stringify({
-        type: 'Employee'
-      }))
-      const root = document.createElement("div")
-      root.setAttribute("id", "root")
-      document.body.append(root)
-      router()
-      window.onNavigate(ROUTES_PATH.Bills)
-      await waitFor(() => screen.getByTestId('icon-mail'))
-      const mailIcon = screen.getByTestId('icon-mail')
-      expect(mailIcon.classList.contains("active-icon")).toEqual(false)
+    test("Then, employee see eye icons on each bills", () => {
+
+      const bills = new Bills({
+        document,
+        onNavigate,
+        store:null,
+        localStorage: window.localStorage,
+      });
+
+      const iconEye = [screen.getAllByTestId('icon-eye')];
+      const iconEye1 = iconEye[0]
+      const eye = iconEye1[0] 
+
+
+      bills.imgUrlAndWidth(eye)
+
+      expect(bills.imgUrlAndWidth).toBeTruthy
+
     })
+
+
     test("Then bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
       const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
@@ -103,33 +72,6 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
 
-    /*test("Then, employee can click on icon eye and show the picture justifying the bill", async () => {
-
-      jest.spyOn(mockStore, "bills")
-
-      const onNavigate = (pathname) => {
-        document.body.innerHTML = ROUTES({ pathname });
-      };
-
-      const store = jest.fn();
-
-      const bills = new Bills({
-        document,
-        onNavigate,
-        store,
-        localStorage: window.localStorage,
-      });
-
-      const iconEye = [screen.getAllByTestId('icon-eye')];
-      const iconEye1 = iconEye[0]
-      const iconEye1a = iconEye1[0] 
-      
-      iconEye1a.onclick = function(){}
-
-      userEvent.click(iconEye1a)
-
-
-    })*/
   })
 })
 
@@ -147,6 +89,7 @@ describe("Given I am a user connected as Employee", () => {
       document.body.append(root)
       router()
       window.onNavigate(ROUTES_PATH.Bills)
+      document.body.innerHTML = BillsUI({ data: bills })
       await waitFor(() => screen.getByText("Statut"))
       const contentRefused  = await screen.getAllByText("refused")
       expect(contentRefused).toBeTruthy()
